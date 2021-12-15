@@ -7,6 +7,7 @@ import PIL.Image as Image
 import tkinter
 import pyperclip
 from time import time
+from threading import Thread
 
 args = {}
 
@@ -79,15 +80,14 @@ def capture_screen(x, y, width, height, path):
     win32gui.DeleteObject(screenshot.GetHandle())
 
 def extract_string_from_image(image): 
-    return pytesseract.image_to_string(image, lang='eng+kor+kor_vert')[:-1]
+    return pytesseract.image_to_string(image, lang='eng+kor')[:-1]
 
 with TemporaryDirectory() as td:
     dest = td + f'\\capture{str(time())}.jpg'
     capture_with_area(dest)
-    image = Image.open(dest)
 
+    image = Image.open(dest).convert('L')
+    Thread(target=lambda: image.show(), daemon=True).start()
     msg = extract_string_from_image(image)
     pyperclip.copy(msg)
     print('Extracted: ', msg)
-
-    #테스트한다!! 
