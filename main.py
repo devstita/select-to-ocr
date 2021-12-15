@@ -9,8 +9,8 @@ import work
 
 if __name__ == '__main__':
     with TemporaryDirectory() as td:
-        win.capture_with_area(td + f'\\capture{str(time())}.jpg')
-
+        dest = td + f'\\capture{str(time())}.jpg'
+        win.capture_with_area(dest)
         image = Image.open(dest).convert('L')
         Thread(target=lambda: image.show(), daemon=True).start()
         msg = work.ocr(image)
