@@ -1,18 +1,20 @@
-from tempfile import TemporaryDirectory
-import PIL.Image as Image
-from time import time
-from threading import Thread
+import pystray
+from pystray import MenuItem, Menu
+from PIL import Image
 
-import win
-import utils
-import work
+from work import do
 
-if __name__ == '__main__':
-    with TemporaryDirectory() as td:
-        dest = td + f'\\capture{str(time())}.jpg'
-        win.capture_with_area(dest)
-        image = Image.open(dest).convert('L')
-        Thread(target=lambda: image.show(), daemon=True).start()
-        msg = work.ocr(image)
-        utils.copy_to_clipboard(msg)
-        print('Extracted: ', msg)
+def stop_tray(): 
+    icon.stop()
+
+def run(): 
+    do()
+
+if __name__ == '__main__': 
+    do()
+    # image = Image.open('icon.png')
+    # icon = pystray.Icon('Select To OCR', image, 'STO', Menu(
+    #     MenuItem('Run', run), 
+    #     MenuItem('Exit', stop_tray), 
+    # ))
+    # icon.run()

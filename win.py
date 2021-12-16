@@ -61,11 +61,12 @@ def select_area():
     def mouse_move_callback(event): 
         cur_pos = (event.x, event.y)
         canvas.delete('all')
-        canvas.create_rectangle(args['start_pos'][0], args['start_pos'][1], cur_pos[0], cur_pos[1], fill='white')
+        canvas.create_rectangle(start_pos[0], start_pos[1], cur_pos[0], cur_pos[1], fill='white')
 
     root.bind('<Button-1>', mouse_down_callback)
     root.bind('<ButtonRelease-1>', mouse_up_callback)
     root.bind('<B1-Motion>', mouse_move_callback)
     root.mainloop()
 
+    # TODO: resolve `IndexError: tuple index out of range` error
     return (min(start_pos[0], end_pos[0]), min(start_pos[1], end_pos[1])), (abs(start_pos[0] - end_pos[0]), abs(start_pos[1] - end_pos[1]))
